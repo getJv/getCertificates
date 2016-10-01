@@ -19,9 +19,17 @@
 			public function __construct()
 			{	
 			
-				add_action('admin_menu', array( $this, 'register_MYmenu' ));
-				add_action('admin_menu', array( $this, 'register_menu_filho' ));
-				$this->create_database();
+					add_action('admin_menu', array( $this, 'register_MYmenu' ));
+					add_action('admin_menu', array( $this, 'register_menu_filho' ));
+					update_option( 'getjv_certificates_database',0);
+					if(!get_option( 'getjv_certificates_database'))
+					{
+						
+						$this->create_database();
+						add_option( 'getjv_certificates_database',1 );
+						update_option( 'getjv_certificates_database',1);
+					}
+				
 			
 			}
 			
@@ -49,25 +57,29 @@
 				$sql="
 				   CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."getjv_certificates` 
 				  ( 
-					`id` int(11) NOT NULL,
+					`id` int(11) NOT NULL AUTO_INCREMENT,
 					`nome_voluntario` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
 					`email_voluntario` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-					`desc_atividades` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-					`nome_iniciativa` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-					`desc_iniciativa` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-					`qnt_horas` int(11) NOT NULL,
-					`qnt_meses` int(11) NOT NULL,
+					`descricao_atividades` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+					`nome_evento` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+					`descricao_evento` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+					`quantidade_horas` int(11) NOT NULL,
+					`quantidade_meses` int(11) NOT NULL,
 					`hash` varchar(35) COLLATE utf8_unicode_ci NOT NULL,
-					`nome_assinante` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
+					`nome_assinante` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+					`cargo_assinante` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+					`descricao_contribuicao` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+					`template` text COLLATE utf8_unicode_ci NOT NULL,
 					`criado_em` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 					`solicitante` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
-					`status` tinyint(1) NOT NULL DEFAULT '1' 
+					`status` tinyint(1) NOT NULL DEFAULT '1' ,
 					 PRIMARY KEY (`id`) 
 				  ) 
 				engine = myisam 
 				charset=utf8 
 				COLLATE utf8_unicode_ci;";
 				dbDelta($sql);
+				
 				
 				
 				
