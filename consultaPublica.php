@@ -5,7 +5,7 @@ global $wpdb;
  
 
 $rawData =file_get_contents("php://input");
-//print_r($rawData); 
+//print_r($rawData); exit;
 
 if(empty($rawData)){echo ""; exit;}
 
@@ -14,15 +14,15 @@ $certificados = $wpdb->get_results(
 										SELECT * 
 										FROM wp_getjv_certificates 
 										where
-										nome_voluntario like '%" . $rawData['s']. "%'
+										nome_voluntario like '%" . $rawData. "%'
 										or
-										hash like '%" . $rawData['s']. "%'
+										hash like '%" . $rawData. "%'
 										
 										"
 									);
 
 print_r(json_encode($certificados));
-
+//print_r($wpdb);
 exit;
 
 

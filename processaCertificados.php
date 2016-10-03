@@ -19,18 +19,18 @@ $rawData = json_decode(file_get_contents("php://input"));
 #Separa dados necessários
 $dataTosave = array();
 
-$dataTosave['nome_voluntario']         =     $rawData->nomeVoluntario       ;
-$dataTosave['email_voluntario']        =     $rawData->emailVoluntario       ;
-$dataTosave['descricao_atividades']    =     $rawData->descricaoAtividades   ;
-$dataTosave['quantidade_horas']        =     $rawData->quantidadeHoras       ;
-$dataTosave['quantidade_meses']        =     $rawData->quantidadeMeses       ;
+$dataTosave['nome_voluntario']         =     $rawData->nome_voluntario       ;
+$dataTosave['email_voluntario']        =     $rawData->email_voluntario       ;
+$dataTosave['descricao_atividades']    =     $rawData->descricao_atividades   ;
+$dataTosave['quantidade_horas']        =     $rawData->quantidade_horas       ;
+$dataTosave['quantidade_meses']        =     $rawData->quantidade_meses       ;
 $dataTosave['hash']      			   =     md5($dataTosave['nome_voluntario'] . $dataTosave['descricao_atividades'] . microtime() );
-$dataTosave['nome_assinante']          =     $rawData->nomeAssinante         ;
-$dataTosave['cargo_assinante']         =     $rawData->cargoAssinante        ;
-$dataTosave['descricao_contribuicao']  =     $rawData->descricaoContribuicao ;
+$dataTosave['nome_assinante']          =     $rawData->nome_assinante         ;
+$dataTosave['cargo_assinante']         =     $rawData->cargo_assinante        ;
+$dataTosave['descricao_contribuicao']  =     $rawData->descricao_contribuicao ;
 $dataTosave['solicitante']			   =     wp_get_current_user()->user_login ;  
-$dataTosave['nome_evento']             =     $rawData->nomeEvento            ;
-$dataTosave['descricao_evento']        =     $rawData->descricaoEvento       ;
+$dataTosave['nome_evento']             =     $rawData->nome_evento            ;
+$dataTosave['descricao_evento']        =     $rawData->descricao_evento       ;
 $dataTosave['template']				   =     $rawData->template      	    ;
    	    
                                     
@@ -52,6 +52,8 @@ $wpdb->insert('wp_getjv_certificates', $dataTosave, "%s");
 $rowid = $wpdb->insert_id;
 //echo '<pre>';
 echo ($rowid);
+
+//print_r($wpdb);
  
 
 
