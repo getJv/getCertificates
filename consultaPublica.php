@@ -13,10 +13,10 @@ $certificados = $wpdb->get_results(
 										SELECT * 
 										FROM wp_getjv_certificates 
 										where
-										nome_voluntario like '%" . $rawData. "%'
+										(nome_voluntario like '%" . $rawData. "%'
 										or
-										hash like '%" . $rawData. "%'
-										
+										hash like '%" . $rawData. "%')
+										and status = 1
 										"
 									);
 
