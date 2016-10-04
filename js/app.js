@@ -4,18 +4,16 @@ var app = angular.module('getjvCertificates',['angular-bind-html-compile','ngMod
 app.controller('certCtrl',['$http',function($http){
 	
 	var cert = this;
-	//cert = {};
 	cert.editTemplate = false;
 	cert.showExample = false;
 	cert.visualizar = false;
 	cert.registrado = false;
+	
 	cert.submit = function(){
 		cert.registrado = false;
 		$url = '../wp-content/plugins/getCertificates/processaCertificados.php'; 
 		$http.post($url,cert)
 			.success(function(res){
-						//console.log();
-                        console.log(res);
 						if(res > 0){
 							cert.registrado = true;						
 						}
@@ -29,9 +27,6 @@ app.controller('certCtrl',['$http',function($http){
 		
 	},
 	
-	
-	
-	
 	cert.toPDF = function(){
 		html2canvas(document.getElementById('toPDF'), {
             onrendered: function (canvas) {
@@ -40,23 +35,17 @@ app.controller('certCtrl',['$http',function($http){
 					pageSize: 'A4',
                     pageOrientation: 'landscape',
 					content: [
-									
-					{
-							image: data,
-							width: 725,
-							bold: true,
-							//pageOrientation: 'portrait',
-							
-							
-						}
-					]
+								{
+									image: data,
+									width: 725,
+									bold: true,
+								}
+							]
 					
                 };
-                pdfMake.createPdf(docDefinition).download("certificado_modelo.pdf");
+                pdfMake.createPdf(docDefinition).download("certificado_dfjug.pdf");
             }
         });
-		
-		
 	};
 	cert.carregarExemplo = function(){
 		
@@ -95,13 +84,6 @@ app.controller('certCtrl',['$http',function($http){
 		
 	};
 
-	cert.nomeParaExemplo = function(){
-		
-		cert.nomeParaExemplo = cert.nome_voluntario;
-			
-		
-	};	
-	
 	cert.showVisualizacao = function(){
 		
 		if(cert.visualizar){
@@ -152,9 +134,10 @@ app.controller('certCtrl',['$http',function($http){
 	
 	
 	
-}]);
-//http://stackoverflow.com/questions/17448100/how-to-split-a-string-with-angularjs
-app.filter('splitByCsv', function() {
+	}]);
+	
+	//http://stackoverflow.com/questions/17448100/how-to-split-a-string-with-angularjs
+	app.filter('splitByCsv', function() {
         return function(input, splitIndex) {
             // do some bounds checking here to ensure it has that index
             if(!input )
@@ -165,26 +148,5 @@ app.filter('splitByCsv', function() {
     });
 	
 	
-			app.config(function(ngModalDefaultsProvider) {
-				  return ngModalDefaultsProvider.set({
-					closeButtonHtml: "<i class='fa fa-times'></i>"
-				  });
-			  });
-			  app.controller('DemoController', function($scope) {
-				  $scope.myData = {
-					link: "http://google.com",
-					modalShown: false,
-					hello: 'world',
-					foo: 'bar'
-				  }
-				  $scope.logClose = function() {
-					console.log('close!');
-				  };
-				  $scope.toggleModal = function() {
-					$scope.myData.modalShown = !$scope.myData.modalShown;
-				  };
-			  });
-
-
 
 }(window.angular));

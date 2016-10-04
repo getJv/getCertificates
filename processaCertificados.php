@@ -2,18 +2,13 @@
 #http://stackoverflow.com/questions/5306612/using-wpdb-in-standalone-script
 require_once('../../../wp-load.php');
 
-
-
 #verificações básicas de segurança: https://developer.wordpress.org/plugins/users/roles-and-capabilities/
 #https://developer.wordpress.org/plugins/users/roles-and-capabilities/
-if ( !(is_user_logged_in() && current_user_can('create_certificates')))  
-{ echo 'Acesso negado! somente usuários com a permissão de criar certificados podem acessar esta página.'; exit;}
+if ( !(is_user_logged_in() && current_user_can('manage_options')))  
+{ echo 'Acesso negado! somente usuários com a permissão de administrador podem acessar esta página.'; exit;}
 
 
 global $wpdb;
-
-
-
 $rawData = json_decode(file_get_contents("php://input"));
 
 #Separa dados necessários
@@ -34,26 +29,12 @@ $dataTosave['descricao_evento']        =     $rawData->descricao_evento       ;
 $dataTosave['template']				   =     $rawData->template      	    ;
    	    
                                     
-
-#validação recomendada pelo wordpress
-if ( false ){
-	echo "Os dados da requisição nao passaram na validação do wordpress." ;
-	echo "<pre>";
-	print_r("Arquivo: " . __FILE__);
-	print_r("Arquivo: " . __LINE__);
-	print_r($dataTosave);
-	exit;
-	
-}
-//print_r($dataTosave);
-//exit;
-//$data['dado'] = 'jhonatan';
+//print_r($dataTosave); exit;
 $wpdb->insert('wp_getjv_certificates', $dataTosave, "%s"); 
 $rowid = $wpdb->insert_id;
-//echo '<pre>';
-echo ($rowid);
-
+echo ($rowid); exit;
 //print_r($wpdb);
+
  
 
 

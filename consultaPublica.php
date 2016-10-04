@@ -3,7 +3,6 @@
 require_once('../../../wp-load.php');
 global $wpdb;
  
-
 $rawData =file_get_contents("php://input");
 //print_r($rawData); exit;
 

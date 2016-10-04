@@ -4,32 +4,26 @@
 	Description: Create and Manager Courses certificates
 	Version: 0.1
 	License: GPL
-	Author: Jhonatan Morais
+	Author: Jhonatan Morais (jhonatanvinicius@gmail.com)
 	Author URI: http://www.getJv.com.br
 */
 
-		
-		
-		
-		
-		
-		
-		class GetJvCertificates{
+	class GetJvCertificates{
 			
-			public function __construct()
-			{	
+		public function __construct()
+		{	
 			
-					add_action('admin_menu', array( $this, 'register_MYmenu' ));
-					add_action('admin_menu', array( $this, 'register_menu_filho' ));
-					update_option( 'getjv_certificates_database',0);
-					if(!get_option( 'getjv_certificates_database'))
-					{
-						
-						$this->create_database();
-						add_option( 'getjv_certificates_database',1 );
-						update_option( 'getjv_certificates_database',1);
-					}
+			add_action('admin_menu', array( $this, 'register_MyMenu' ));
+			add_action('admin_menu', array( $this, 'register_menu_filho' ));
+			//update_option( 'getjv_certificates_database',0); // Descomentar caso queira recriar a tabela após excluir a mesma da base de dados.
+			if(!get_option( 'getjv_certificates_database'))
+			{
 				
+				$this->create_database();
+				add_option( 'getjv_certificates_database',1 );
+				update_option( 'getjv_certificates_database',1);
+			}
+		
 			
 			}
 			
@@ -38,12 +32,12 @@
 			*
 			* https://developer.wordpress.org/reference/functions/add_menu_page/
 			*/
-			public function register_MYmenu(){
-				add_menu_page('Titulo da pagina', 'Certificados', 'manage_options', 'menu-getjv-certificates');
+			public function register_MyMenu(){
+				add_menu_page('Pagina de Certificados', 'Certificados', 'manage_options','getCertificates/certificados.php');
 			}
 			
 			public function register_menu_filho(){
-				add_submenu_page( 'menu-getjv-certificates', 'Titulo da pagina', 'Participantes','manage_options', 'getCertificates/participantes.php');
+				add_submenu_page( 'getCertificates/certificados.php', 'Gerador de Certificados', 'Gerador','manage_options', 'getCertificates/gerador.php');
 				//add_submenu_page( 'menu-getjv-certificates', 'My Custom Submenu Page', 'My Custom Submenu Page','manage_options', 'my-secondary-slug');
 			}
 			/**
@@ -80,21 +74,7 @@
 				COLLATE utf8_unicode_ci;";
 				dbDelta($sql);
 				
-				
-				
-				
- 
-				
-				
-				
-				
-				
-				
-				
 			}
-			
-			
-			
 		}
 		
 			// instantiate the plugin class
